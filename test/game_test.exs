@@ -1,29 +1,26 @@
 defmodule GameTest do
   use ExUnit.Case
-  doctest TicTacToe.Game
-
-  setup do
-    {:ok, empty: TicTacToe.Board.empty_board}
-  end
+  alias TicTacToe.Board, as: Board
+  alias TicTacToe.Game, as: Game
 
   describe "the current player" do
 
     test "is :player_one on an empty board" do
-      assert TicTacToe.Game.current_player(TicTacToe.Board.empty_board) == :player_one
+      assert Game.current_player(Board.empty_board) == :player_one
     end
 
-    test "is :player_two if player one has taken a single turn", context do
-      marked_board = TicTacToe.Board.mark(context[:empty], 0, :player_one)
-      assert TicTacToe.Game.current_player(marked_board) == :player_two
+    test "is :player_two if player one has taken a single turn" do
+      marked_board = Board.mark(Board.empty_board, 0, :player_one)
+      assert Game.current_player(marked_board) == :player_two
     end
 
-    test "is :player_one if four moves have been made", context do
-      marked_board = context[:empty]
-        |> TicTacToe.Board.mark(0, :player_one)
-        |> TicTacToe.Board.mark(2, :player_two)
-        |> TicTacToe.Board.mark(4, :player_one)
-        |> TicTacToe.Board.mark(6, :player_two)
-      assert TicTacToe.Game.current_player(marked_board) == :player_one
+    test "is :player_one if four moves have been made" do
+      marked_board = Board.empty_board
+        |> Board.mark(0, :player_one)
+        |> Board.mark(2, :player_two)
+        |> Board.mark(4, :player_one)
+        |> Board.mark(6, :player_two)
+      assert Game.current_player(marked_board) == :player_one
     end
 
   end
@@ -31,24 +28,24 @@ defmodule GameTest do
   describe "making a move in a game of tic-tac-toe" do
 
     test "makes the first move on an empty board" do
-      marked_board = TicTacToe.Game.move(0)
+      marked_board = Game.move(0)
       assert marked_board == %{0 => :player_one}
     end
 
-    test "makes a second move", context do
-      marked_board = context[:empty]
-        |> TicTacToe.Game.move(1)
-        |> TicTacToe.Game.move(2)
+    test "makes a second move" do
+      marked_board = Board.empty_board
+        |> Game.move(1)
+        |> Game.move(2)
       assert marked_board == %{1 => :player_one, 2 => :player_two}
     end
 
-    test "makes a many moves", context do
+    test "makes a many moves" do
       expected_board = %{4 => :player_one, 7 => :player_two, 3 => :player_one, 2 => :player_two}
-      marked_board = context[:empty]
-        |> TicTacToe.Game.move(4)
-        |> TicTacToe.Game.move(7)
-        |> TicTacToe.Game.move(3)
-        |> TicTacToe.Game.move(2)
+      marked_board = Board.empty_board
+        |> Game.move(4)
+        |> Game.move(7)
+        |> Game.move(3)
+        |> Game.move(2)
       assert marked_board == expected_board
     end
 
