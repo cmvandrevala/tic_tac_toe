@@ -2,6 +2,7 @@ defmodule BoardTest do
   use ExUnit.Case
   doctest TicTacToe.Board
 
+
   setup do
     {:ok, empty: TicTacToe.Board.empty_board}
   end
@@ -120,20 +121,6 @@ defmodule BoardTest do
       marked_board = TicTacToe.Board.mark(context[:empty], 3, :player_one)
       assert TicTacToe.Board.number_of_filled_cells(marked_board) == 1
     end
-    #
-    # test "returns false for a filled board", context do
-    #   filled_board = context[:empty]
-    #     |> TicTacToe.Board.mark(0, :p1)
-    #     |> TicTacToe.Board.mark(1, :p2)
-    #     |> TicTacToe.Board.mark(2, :p1)
-    #     |> TicTacToe.Board.mark(3, :p2)
-    #     |> TicTacToe.Board.mark(4, :p3)
-    #     |> TicTacToe.Board.mark(5, :p4)
-    #     |> TicTacToe.Board.mark(6, :p3)
-    #     |> TicTacToe.Board.mark(7, :p4)
-    #     |> TicTacToe.Board.mark(8, :p5)
-    #   refute TicTacToe.Board.empty?(filled_board)
-    # end
 
   end
 
