@@ -7,6 +7,7 @@ defmodule TicTacToe.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     escript: [main_module: TicTacToe],
      deps: deps()]
   end
 
