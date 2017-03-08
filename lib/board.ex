@@ -8,10 +8,9 @@ defmodule TicTacToe.Board do
 
   def cell_status(board, cell), do: Map.get(board, cell) || :empty
 
-  def filled?(board), do: number_of_filled_cells(board) == @number_of_cells
-
-  def empty?(board), do: number_of_filled_cells(board) == 0
-
   def number_of_filled_cells(board), do: Kernel.map_size(board)
+
+  def current_marks(board),
+    do: Enum.map(0..@number_of_cells-1, fn x -> board[x] || :empty end)
 
 end

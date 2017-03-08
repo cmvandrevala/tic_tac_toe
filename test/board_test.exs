@@ -46,66 +46,6 @@ defmodule BoardTest do
 
   end
 
-  describe "identifying a filled board" do
-
-    test "returns false for an empty board" do
-      refute Board.filled?(Board.empty_board)
-    end
-
-    test "returns false for a paritally filled board" do
-      marked_board = Board.empty_board
-        |> Board.mark(3, :pl2)
-        |> Board.mark(0, :pl1)
-        |> Board.mark(6, :pl2)
-      refute Board.filled?(marked_board)
-    end
-
-    test "returns true for a filled board" do
-      filled_board = Board.empty_board
-        |> Board.mark(0, :p1)
-        |> Board.mark(1, :p2)
-        |> Board.mark(2, :p1)
-        |> Board.mark(3, :p2)
-        |> Board.mark(4, :p3)
-        |> Board.mark(5, :p4)
-        |> Board.mark(6, :p3)
-        |> Board.mark(7, :p4)
-        |> Board.mark(8, :p5)
-      assert Board.filled?(filled_board)
-    end
-
-  end
-
-  describe "identifying an empty board" do
-
-    test "returns true for an empty board" do
-      assert Board.empty?(Board.empty_board)
-    end
-
-    test "returns false for a paritally filled board" do
-      marked_board = Board.empty_board
-        |> Board.mark(3, :player_one)
-        |> Board.mark(0, :player_one)
-        |> Board.mark(6, :player_one)
-      refute Board.empty?(marked_board)
-    end
-
-    test "returns false for a filled board" do
-      filled_board = Board.empty_board
-        |> Board.mark(0, :p1)
-        |> Board.mark(1, :p2)
-        |> Board.mark(2, :p1)
-        |> Board.mark(3, :p2)
-        |> Board.mark(4, :p3)
-        |> Board.mark(5, :p4)
-        |> Board.mark(6, :p3)
-        |> Board.mark(7, :p4)
-        |> Board.mark(8, :p5)
-      refute Board.empty?(filled_board)
-    end
-
-  end
-
   describe "number of filled cells" do
 
     test "returns 0 for an empty board" do
@@ -115,6 +55,47 @@ defmodule BoardTest do
     test "returns 1 for one filled cell" do
       marked_board = Board.mark(Board.empty_board, 3, :player_one)
       assert Board.number_of_filled_cells(marked_board) == 1
+    end
+
+    test "returns 3 for three filled cells" do
+      marked_board = Board.empty_board
+        |> Board.mark(3, :player_one)
+        |> Board.mark(5, :player_two)
+        |> Board.mark(7, :player_one)
+      assert Board.number_of_filled_cells(marked_board) == 3
+    end
+
+  end
+
+  describe "the current cell values" do
+
+    test "returns all empty cells if no moves have been made" do
+      expected_output = [:empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty, :empty]
+      assert Board.current_marks(Board.empty_board) == expected_output
+    end
+
+    test "returns the correct values after one mark" do
+      marked_board = Board.mark(Board.empty_board, 2, :player_one)
+      expected_output = [:empty, :empty, :player_one, :empty, :empty, :empty, :empty, :empty, :empty]
+      assert Board.current_marks(marked_board) == expected_output
+    end
+
+    test "returns the correct values after two marks" do
+      marked_board = Board.empty_board
+        |> Board.mark(5, :player_one)
+        |> Board.mark(7, :player_two)
+      expected_output = [:empty, :empty, :empty, :empty, :empty, :player_one, :empty, :player_two, :empty]
+      assert Board.current_marks(marked_board) == expected_output
+    end
+
+    test "returns the correct values after many marks" do
+      marked_board = Board.empty_board
+        |> Board.mark(5, :player_one)
+        |> Board.mark(7, :player_two)
+        |> Board.mark(0, :player_one)
+        |> Board.mark(8, :player_two)
+      expected_output = [:player_one, :empty, :empty, :empty, :empty, :player_one, :empty, :player_two, :player_two]
+      assert Board.current_marks(marked_board) == expected_output
     end
 
   end
