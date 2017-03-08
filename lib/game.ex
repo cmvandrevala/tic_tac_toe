@@ -1,5 +1,6 @@
 defmodule TicTacToe.Game do
   alias TicTacToe.Board, as: Board
+  alias TicTacToe.ConsoleMessages, as: Messages
   alias TicTacToe.Rules, as: Rules
 
   def current_player(board),
@@ -17,7 +18,7 @@ defmodule TicTacToe.Game do
     do: play(player_one, player_two, Board.empty_board)
 
   def play(player_one, player_two, board) do
-    IO.inspect board
+    IO.puts Messages.formatted_board(board)
     if Rules.in_progress?(board) do
       take_turn(player_one, player_two, board)
     else
