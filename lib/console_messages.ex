@@ -1,7 +1,6 @@
 defmodule TicTacToe.ConsoleMessages do
   alias TicTacToe.Board, as: Board
 
-  @blank_space "   "
   @player_one_mark " X "
   @player_two_mark " O "
   @vertical_bar "|"
@@ -18,14 +17,16 @@ defmodule TicTacToe.ConsoleMessages do
   end
 
   defp marks(board) do
-    Enum.map(Board.current_marks(board), &status_to_symbol/1)
+    Board.current_marks(board)
+    |> Enum.with_index
+    |> Enum.map(&status_to_symbol/1)
   end
 
-  defp status_to_symbol(status) do
+  defp status_to_symbol({status, indx}) do
     case status do
       :player_one -> @player_one_mark
       :player_two -> @player_two_mark
-      _ -> @blank_space
+      _ -> " #{indx} "
     end
   end
 
