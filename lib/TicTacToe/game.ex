@@ -1,5 +1,7 @@
 defmodule TicTacToe.Game do
   alias TicTacToe.Board, as: Board
+  alias TicTacToe.ComputerPlayer, as: ComputerPlayer
+  alias TicTacToe.HumanPlayer, as: HumanPlayer
   alias TicTacToe.ConsoleMessages, as: Messages
   alias TicTacToe.Rules, as: Rules
 
@@ -47,14 +49,10 @@ defmodule TicTacToe.Game do
     board
   end
 
-  def human_player(board) do
-    cell = IO.gets "Enter your move: "
-    move(board, elem(Integer.parse(cell), 0))
-  end
+  def human_player(board),
+    do: move(board, HumanPlayer.get_move(board))
 
-  def first_available_spot_computer_player(board) do
-    cell = TicTacToe.ComputerPlayer.first_available_spot(board)
-    move(board, cell)
-  end
+  def first_available_spot_computer_player(board),
+    do: move(board, ComputerPlayer.first_available_spot(board))
 
 end

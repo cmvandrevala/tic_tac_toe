@@ -4,7 +4,7 @@ defmodule MoveValidatorTest do
   alias TicTacToe.Board, as: Board
   alias TicTacToe.MoveValidator, as: Validator
 
-  setup context do
+  setup _context do
     board = Board.empty_board
     |> Board.current_marks
     |> List.to_tuple
@@ -54,13 +54,10 @@ defmodule MoveValidatorTest do
     end
 
     test "returns :integer_too_large for an input that is too large (near boundary)", context do
-      board = Board.empty_board
-      |> Board.current_marks
-      |> List.to_tuple
-      assert Validator.validate(9, board) == :too_large
+      assert Validator.validate(9, context[:board]) == :too_large
     end
 
-    test "returns :cell_taken if a cell has already been taken", context do
+    test "returns :cell_taken if a cell has already been taken" do
       board = Board.mark(Board.empty_board, 0, :player_one)
       marks = List.to_tuple(Board.current_marks(board))
       assert Validator.validate(0, marks) == :cell_taken
