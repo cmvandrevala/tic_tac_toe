@@ -1,5 +1,5 @@
-defmodule TicTacToe.Rules do
-  alias TicTacToe.Board, as: Board
+defmodule TicTacToe.Core.Rules do
+  alias TicTacToe.Core.Board, as: Board
 
   @players [:player_one, :player_two]
 

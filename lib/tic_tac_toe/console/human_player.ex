@@ -1,7 +1,7 @@
-defmodule TicTacToe.HumanPlayer do
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ConsoleMessages, as: Messages
-  alias TicTacToe.MoveValidator, as: MoveValidator
+defmodule TicTacToe.Console.HumanPlayer do
+  alias TicTacToe.Console.ConsoleMessages, as: Messages
+  alias TicTacToe.Console.MoveValidator, as: MoveValidator
+  alias TicTacToe.Core.Board, as: Board
 
   def get_move(board), do: get_move(board, &IO.gets/1)
 

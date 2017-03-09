@@ -1,6 +1,6 @@
 defmodule BoardTest do
   use ExUnit.Case
-  alias TicTacToe.Board, as: Board
+  alias TicTacToe.Core.Board, as: Board
 
   describe "marking a cell on a board" do
 

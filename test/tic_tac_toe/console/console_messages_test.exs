@@ -1,7 +1,7 @@
 defmodule ConsoleMessagesTest do
   use ExUnit.Case
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ConsoleMessages, as: Messages
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Console.ConsoleMessages, as: Messages
 
   describe "a formatted board for the console" do
 

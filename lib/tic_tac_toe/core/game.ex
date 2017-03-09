@@ -1,9 +1,9 @@
-defmodule TicTacToe.Game do
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ComputerPlayer, as: ComputerPlayer
-  alias TicTacToe.HumanPlayer, as: HumanPlayer
-  alias TicTacToe.ConsoleMessages, as: Messages
-  alias TicTacToe.Rules, as: Rules
+defmodule TicTacToe.Core.Game do
+  alias TicTacToe.ArtificialIntelligence.ComputerPlayer, as: ComputerPlayer
+  alias TicTacToe.Console.HumanPlayer, as: HumanPlayer
+  alias TicTacToe.Console.ConsoleMessages, as: Messages
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Core.Rules, as: Rules
 
   def current_player(board),
     do: if new_round?(board), do: :player_one, else: :player_two

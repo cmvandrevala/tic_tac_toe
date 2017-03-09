@@ -2,8 +2,8 @@ defmodule HumanPlayerTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
 
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.HumanPlayer, as: HumanPlayer
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Console.HumanPlayer, as: HumanPlayer
 
   describe "a human player's move" do
 

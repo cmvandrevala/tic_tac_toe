@@ -1,7 +1,7 @@
 defmodule ComputerPlayerTest do
   use ExUnit.Case
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ComputerPlayer, as: Player
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.ArtificialIntelligence.ComputerPlayer, as: Player
 
   describe "a first available spot computer player" do
 

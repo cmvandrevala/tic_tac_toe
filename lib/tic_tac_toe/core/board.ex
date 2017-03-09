@@ -1,4 +1,4 @@
-defmodule TicTacToe.Board do
+defmodule TicTacToe.Core.Board do
 
   @number_of_cells 9
 
