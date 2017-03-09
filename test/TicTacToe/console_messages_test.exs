@@ -76,6 +76,34 @@ defmodule ConsoleMessagesTest do
       assert Messages.game_status(:tie) == "The game has ended in a tie."
     end
 
+    test "returns a message that an input is too small" do
+      assert Messages.input_too_small == "That cell value is too small!"
+    end
+
+    test "returns a message that an input is too large" do
+      assert Messages.input_too_large == "That cell value is too large!"
+    end
+
+    test "returns a message that a cell has been taken" do
+      assert Messages.input_already_taken == "That cell has already been taken!"
+    end
+
+    test "returns a message that the player must choose a valid cell" do
+      assert Messages.choose_valid_cell == "You need to enter an integer between 0 and 8."
+    end
+
+    test "returns a move prompt" do
+      assert Messages.move_prompt == "Enter your move: "
+    end
+
+    test "returns a confirmation of a move" do
+      assert Messages.move_confirmation(0) == "You are moving in cell 0."
+    end
+
+    test "returns a confirmation of a different move" do
+      assert Messages.move_confirmation(6) == "You are moving in cell 6."
+    end
+
   end
 
 end

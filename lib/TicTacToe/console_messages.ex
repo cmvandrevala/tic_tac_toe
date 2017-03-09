@@ -36,6 +36,18 @@ defmodule TicTacToe.ConsoleMessages do
 
   def game_over, do: "The game is over."
 
+  def input_too_small, do: "That cell value is too small!"
+
+  def input_too_large, do: "That cell value is too large!"
+
+  def input_already_taken, do: "That cell has already been taken!"
+
+  def choose_valid_cell, do: "You need to enter an integer between 0 and 8."
+
+  def move_prompt, do: "Enter your move: "
+
+  def move_confirmation(cell), do: "You are moving in cell #{cell}."
+
   def game_status(status) do
     case status do
       :player_one -> "Player one wins!"

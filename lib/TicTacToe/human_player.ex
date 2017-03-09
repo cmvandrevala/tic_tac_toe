@@ -1,5 +1,6 @@
 defmodule TicTacToe.HumanPlayer do
   alias TicTacToe.Board, as: Board
+  alias TicTacToe.ConsoleMessages, as: Messages
   alias TicTacToe.MoveValidator, as: MoveValidator
 
   def get_move(board), do: get_move(board, &IO.gets/1)
@@ -9,25 +10,25 @@ defmodule TicTacToe.HumanPlayer do
     formatted_marks = format_marks(board)
     case MoveValidator.validate(formatted_input, formatted_marks) do
       :valid ->
-        IO.puts "You are moving in cell #{formatted_input}."
+        IO.puts Messages.move_confirmation(formatted_input)
         formatted_input
       :too_small ->
-        IO.puts "That cell value is too small!"
+        IO.puts Messages.input_too_small
         get_move(board, input_function)
       :too_large ->
-        IO.puts "That cell value is too large!"
+        IO.puts Messages.input_too_large
         get_move(board, input_function)
       :cell_taken ->
-        IO.puts "That cell has already been taken!"
+        IO.puts Messages.input_already_taken
         get_move(board, input_function)
       _ ->
-        IO.puts "You need to enter an integer between 0 and 8."
+        IO.puts Messages.choose_valid_cell
         get_move(board, input_function)
     end
   end
 
   defp format_input(input_function) do
-    input = input_function.("Enter your move: ")
+    input = input_function.(Messages.move_prompt)
     unless not_an_integer(input), do: elem(Integer.parse(input), 0)
   end
 
