@@ -26,7 +26,21 @@ defmodule TicTacToe.ConsoleMessages do
     case status do
       :player_one -> @player_one_mark
       :player_two -> @player_two_mark
-      _ -> " #{indx} "
+      :empty -> " #{indx} "
+    end
+  end
+
+  def player_one_turn, do: "It is player one's turn."
+
+  def player_two_turn, do: "It is player two's turn."
+
+  def game_over, do: "The game is over."
+
+  def game_status(status) do
+    case status do
+      :player_one -> "Player one wins!"
+      :player_two -> "Player two wins!"
+      :tie -> "The game has ended in a tie."
     end
   end
 

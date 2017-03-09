@@ -50,4 +50,32 @@ defmodule ConsoleMessagesTest do
 
   end
 
+  describe "messages to guide the user through the game" do
+
+    test "returns a message when it is player one's turn" do
+      assert Messages.player_one_turn == "It is player one's turn."
+    end
+
+    test "returns a message when it is player two's turn" do
+      assert Messages.player_two_turn == "It is player two's turn."
+    end
+
+    test "returns a message when the game is over" do
+      assert Messages.game_over == "The game is over."
+    end
+
+    test "returns player one as a winner" do
+      assert Messages.game_status(:player_one) == "Player one wins!"
+    end
+
+    test "returns player two as a winner" do
+      assert Messages.game_status(:player_two) == "Player two wins!"
+    end
+
+    test "returns neither player as a winner in a tie game" do
+      assert Messages.game_status(:tie) == "The game has ended in a tie."
+    end
+
+  end
+
 end

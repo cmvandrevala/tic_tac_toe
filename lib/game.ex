@@ -18,19 +18,33 @@ defmodule TicTacToe.Game do
     do: play(player_one, player_two, Board.empty_board)
 
   def play(player_one, player_two, board) do
-    IO.puts Messages.formatted_board(board)
+    start_game(board)
     if Rules.in_progress?(board) do
       take_turn(player_one, player_two, board)
     else
-      board
+      end_game(board)
     end
+  end
+
+  defp start_game(board) do
+    IO.puts "\n#{Messages.formatted_board(board)}"
   end
 
   defp take_turn(player_one, player_two, board) do
     case current_player(board) do
-      :player_one -> play(player_one, player_two, player_one.(board))
-      :player_two -> play(player_one, player_two, player_two.(board))
+      :player_one ->
+        IO.puts Messages.player_one_turn
+        play(player_one, player_two, player_one.(board))
+      :player_two ->
+        IO.puts Messages.player_two_turn
+        play(player_one, player_two, player_two.(board))
     end
+  end
+
+  defp end_game(board) do
+    IO.puts Messages.game_over
+    IO.puts Messages.game_status(Rules.status(board))
+    board
   end
 
   def human_player(board) do
