@@ -21,6 +21,41 @@ defmodule HumanPlayerTest do
       end
     end
 
+    test "filters out single quotes" do
+      capture_io fn ->
+        output = HumanPlayer.get_move(Board.empty_board, fn(_) -> "'8\n" end)
+        assert output == 8
+      end
+    end
+
+    test "filters out double quotes" do
+      capture_io fn ->
+        output = HumanPlayer.get_move(Board.empty_board, fn(_) -> "\"8\"\n" end)
+        assert output == 8
+      end
+    end
+
+    test "filters out semicolons" do
+      capture_io fn ->
+        output = HumanPlayer.get_move(Board.empty_board, fn(_) -> "2;\n" end)
+        assert output == 2
+      end
+    end
+
+    test "filters out colons" do
+      capture_io fn ->
+        output = HumanPlayer.get_move(Board.empty_board, fn(_) -> ":7:\n" end)
+        assert output == 7
+      end
+    end
+
+    test "filters out commas" do
+      capture_io fn ->
+        output = HumanPlayer.get_move(Board.empty_board, fn(_) -> ",,6\n" end)
+        assert output == 6
+      end
+    end
+
   end
 
 end

@@ -8,7 +8,7 @@ defmodule TicTacToe.HumanPlayer do
   def get_move(board, input_function) do
     formatted_input = format_input(input_function)
     formatted_marks = format_marks(board)
-    case MoveValidator.validate(formatted_input, formatted_marks) do
+    case MoveValidator.validate_cell(formatted_input, formatted_marks) do
       :valid ->
         IO.puts Messages.move_confirmation(formatted_input)
         formatted_input
@@ -21,21 +21,36 @@ defmodule TicTacToe.HumanPlayer do
       :cell_taken ->
         IO.puts Messages.input_already_taken
         get_move(board, input_function)
-      _ ->
+      :not_an_integer ->
         IO.puts Messages.choose_valid_cell
         get_move(board, input_function)
     end
   end
 
   defp format_input(input_function) do
-    input = input_function.(Messages.move_prompt)
-    unless not_an_integer(input), do: elem(Integer.parse(input), 0)
+    Messages.move_prompt
+    |> input_function.()
+    |> sanitize
+    |> string_to_integer
   end
 
-  defp not_an_integer(input) do
-    Regex.match?(~r/[a-z]/, input) ||
-    Regex.match?(~r/^[\s]$/, input) ||
-    String.contains?(input, ".")
+  defp sanitize(input) do
+    input
+    |> String.replace("\"", "")
+    |> String.replace("'", "")
+    |> String.replace(";", "")
+    |> String.replace(":", "")
+    |> String.replace(",", "")
+  end
+
+  defp string_to_integer(input) do
+    if integer?(input), do: elem(Integer.parse(input), 0)
+  end
+
+  defp integer?(input) do
+    !MoveValidator.contains_letter?(input) and
+    !MoveValidator.contains_decimal?(input) and
+    !MoveValidator.only_newline?(input)
   end
 
   defp format_marks(board) do
