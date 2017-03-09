@@ -55,4 +55,7 @@ defmodule TicTacToe.Core.Game do
   def first_available_spot_computer_player(board),
     do: move(board, ComputerPlayer.first_available_spot(board))
 
+  def unbeatable_computer_player(board),
+    do: move(board, ComputerPlayer.best_spot(board))
+
 end

@@ -37,4 +37,90 @@ defmodule ComputerPlayerTest do
 
   end
 
+  describe "the utility measurement of a given board status" do
+
+    test "returns 10 if the selected player wins (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      assert Player.utility(marked_board, :player_one) == 10
+    end
+
+    test "returns 10 if the selected player wins (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(2, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(6, :player_two)
+      assert Player.utility(marked_board, :player_two) == 10
+    end
+
+    test "returns -10 if the selected player loses (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(8, :player_two)
+      assert Player.utility(marked_board, :player_one) == -10
+    end
+
+    test "returns -10 if the selected player loses (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.utility(marked_board, :player_two) == -10
+    end
+
+    test "returns 0 if the game is a tie (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      assert Player.utility(marked_board, :player_one) == 0
+    end
+
+    test "returns 0 if the game is a tie (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      assert Player.utility(marked_board, :player_two) == 0
+    end
+
+    test "returns nil for a game in progress" do
+      assert Player.utility(Board.empty_board, :player_one) == nil
+    end
+
+  end
+
+  describe "an unbeatable computer player" do
+
+    test "returns the first cell if it is the first move of the game" do
+      assert Player.best_spot(Board.empty_board) == 0
+    end
+
+    test "returns the center cell if it is the second move of the game and its available" do
+      marked_board = Board.mark(Board.empty_board, 1, :player_one)
+      assert Player.best_spot(marked_board) == 4
+    end
+
+    test "returns the first cell if it is the second move of the game and center is not available" do
+      marked_board = Board.mark(Board.empty_board, 4, :player_one)
+      assert Player.best_spot(marked_board) == 0
+    end
+
+  end
+
 end
