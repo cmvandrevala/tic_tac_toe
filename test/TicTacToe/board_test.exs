@@ -100,4 +100,12 @@ defmodule BoardTest do
 
   end
 
+  describe "the total number of cells on the board" do
+
+    test "returns nine for a standard tic-tac-toe board" do
+      assert Board.number_of_cells == 9
+    end
+
+  end
+
 end

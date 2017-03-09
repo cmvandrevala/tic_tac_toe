@@ -1,6 +1,7 @@
 defmodule GameTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
+  
   alias TicTacToe.Board, as: Board
   alias TicTacToe.Game, as: Game
   alias TicTacToe.Rules, as: Rules

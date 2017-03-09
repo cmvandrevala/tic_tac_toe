@@ -13,4 +13,6 @@ defmodule TicTacToe.Board do
   def current_marks(board),
     do: Enum.map(0..@number_of_cells-1, fn x -> board[x] || :empty end)
 
+  def number_of_cells, do: @number_of_cells
+
 end
