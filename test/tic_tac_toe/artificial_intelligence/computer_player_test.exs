@@ -238,6 +238,89 @@ defmodule ComputerPlayerTest do
 
   end
 
+  describe "the interplay between #game_tree and #score" do
+
+    test "returns the score for four open cells (variation one)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(7, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_two)) == 0
+    end
+
+    test "returns the score for four open cells (variation two)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(3, :player_two)
+      |> Board.mark(6, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_two)) == -10
+    end
+
+    test "returns the score for four open cells (variation three)" do
+      board = Board.empty_board
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(8, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_two)) == -10
+    end
+
+    test "returns the score for five open cells (variation one)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(8, :player_two)
+      assert Tree.score(Player.game_tree(board, :player_one)) == 10
+    end
+
+    test "returns the score for five open cells (variation two)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(3, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(8, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_one)) == 0
+    end
+
+    test "returns the score for five open cells (variation three)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(7, :player_two)
+      assert Tree.score(Player.game_tree(board, :player_one)) == 10
+    end
+
+    test "returns the score for six open cells" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_two)
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_one)) == 10
+    end
+
+    test "returns the score for seven open cells (variation one)" do
+      board = Board.empty_board
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_one)) == 10
+    end
+
+    test "returns the score for seven open cells (variation two)" do
+      board = Board.empty_board
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      assert Tree.score(Player.game_tree(board, :player_two)) == -10
+    end
+
+  end
+
   describe "an unbeatable computer player" do
 
     test "returns the first cell if it is the first move of the game" do
