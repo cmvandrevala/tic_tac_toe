@@ -108,4 +108,104 @@ defmodule BoardTest do
 
   end
 
+  describe "remaining spaces on the board" do
+
+    test "returns all of the spaces for an empty board" do
+      assert Board.remaining_spaces(Board.empty_board) == [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    end
+
+    test "returns the remaining spaces for a board with one mark" do
+      marked_board = Board.mark(Board.empty_board, 5, :player_one)
+      assert Board.remaining_spaces(marked_board) == [0, 1, 2, 3, 4, 6, 7, 8]
+    end
+
+    test "returns the remaining spaces for a board with one mark (different cell)" do
+      marked_board = Board.mark(Board.empty_board, 2, :player_one)
+      assert Board.remaining_spaces(marked_board) == [0, 1, 3, 4, 5, 6, 7, 8]
+    end
+
+    test "returns the remaining spaces for a board with two marks" do
+      marked_board = Board.empty_board
+      |> Board.mark(6, :player_one)
+      |> Board.mark(7, :player_two)
+      assert Board.remaining_spaces(marked_board) == [0, 1, 2, 3, 4, 5, 8]
+    end
+
+    test "returns the remaining spaces for a board with three marks" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(8, :player_one)
+      assert Board.remaining_spaces(marked_board) == [1, 2, 3, 4, 6, 7]
+    end
+
+    test "returns the remaining spaces for a board with many marks" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      |> Board.mark(7, :player_one)
+      assert Board.remaining_spaces(marked_board) == [8]
+    end
+
+    test "returns no spaces for a full board" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Board.remaining_spaces(marked_board) == []
+    end
+
+  end
+
+  describe "check if the board is empty" do
+
+    test "returns true for an empty board" do
+      assert Board.empty?(Board.empty_board)
+    end
+
+    test "returns false for a non-empty board" do
+      board = Board.mark(Board.empty_board, 3, :player_one)
+      refute Board.empty?(board)
+    end
+
+  end
+
+  describe "check if the board is filled" do
+
+    test "returns false for an empty board" do
+      refute Board.filled?(Board.empty_board)
+    end
+
+    test "returns false for a partially-filled board" do
+      board = Board.mark(Board.empty_board, 3, :player_one)
+      refute Board.filled?(board)
+    end
+
+    test "returns true for a filled board" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Board.filled?(board)
+    end
+
+  end
+
 end

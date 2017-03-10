@@ -15,6 +15,16 @@ defmodule GameTreeTest do
       assert node.value == nil
     end
 
+    test "returns a node with a cell of 2" do
+      node = Tree.node(1, 2)
+      assert node.cell == 2
+    end
+
+    test "returns a node with a cell of nil" do
+      node = Tree.node
+      assert node.cell == nil
+    end
+
     test "adds one node as a child" do
       tree = Tree.node(1) |> Tree.add_child(Tree.node(2))
       assert tree.children == [Tree.node(2)]

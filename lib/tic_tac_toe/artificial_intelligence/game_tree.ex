@@ -4,6 +4,7 @@ defmodule TicTacToe.ArtificialIntelligence.GameTree do
 
   def node, do: %Node{}
   def node(value), do: %Node{value: value}
+  def node(value, cell), do: %Node{value: value, cell: cell}
 
   def add_child(parent, child),
     do: %Node{value: parent.value, children: parent.children ++ [child]}

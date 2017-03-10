@@ -10,6 +10,11 @@ defmodule NodeTest do
       assert node.value == nil
     end
 
+    test "has a default cell of nil" do
+      node = %Node{}
+      assert node.cell == nil
+    end
+
     test "can be set with a value" do
       node = %Node{value: 7}
       assert node.value == 7

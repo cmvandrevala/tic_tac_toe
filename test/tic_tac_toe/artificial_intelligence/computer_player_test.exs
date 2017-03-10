@@ -1,6 +1,7 @@
 defmodule ComputerPlayerTest do
   use ExUnit.Case
   alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.ArtificialIntelligence.GameTree, as: Tree
   alias TicTacToe.ArtificialIntelligence.ComputerPlayer, as: Player
 
   describe "a first available spot computer player" do
@@ -101,6 +102,104 @@ defmodule ComputerPlayerTest do
 
     test "returns nil for a game in progress" do
       assert Player.utility(Board.empty_board, :player_one) == nil
+    end
+
+  end
+
+  describe "generating a game tree" do
+
+    test "returns a node with value nil if the board is full" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(6, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.game_tree(board, :player_one) == Tree.node
+    end
+
+    test "returns the one remaining node if the board is almost full (first configuration)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      |> Board.mark(7, :player_one)
+      tree = Tree.add_child(Tree.node, Tree.node(0, 8))
+      assert Player.game_tree(board, :player_one) == tree
+    end
+
+    test "returns the one remaining node if the board is almost full (second configuration)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      |> Board.mark(7, :player_two)
+      |> Board.mark(8, :player_one)
+      tree = Tree.add_child(Tree.node, Tree.node(10, 4))
+      assert Player.game_tree(board, :player_one) == tree
+    end
+
+    test "returns the one remaining node if the board is almost full (third configuration)" do
+      board = Board.empty_board
+      |> Board.mark(1, :player_one)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(6, :player_two)
+      |> Board.mark(7, :player_two)
+      |> Board.mark(8, :player_one)
+      tree = Tree.add_child(Tree.node, Tree.node(0, 0))
+      assert Player.game_tree(board, :player_two) == tree
+    end
+
+    test "returns a tree for two remaining cells (player one version)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(3, :player_two)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_two)
+      child1 = Tree.node(10,1)
+      child = Tree.node(nil,6)
+      grandchild = Tree.node(0,1)
+      child2 = Tree.add_child(child, grandchild)
+      tree = Tree.node
+      |> Tree.add_child(child1)
+      |> Tree.add_child(child2)
+      assert Player.game_tree(board, :player_one) == tree
+    end
+
+    test "returns a tree for two remaining cells (player two version)" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(3, :player_two)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_two)
+      child1 = Tree.node(nil,1)
+      child2 = Tree.node(nil,6)
+      grandchild1 = Tree.node(0,6)
+      grandchild2 = Tree.node(-10,1)
+      tree = Tree.node
+      |> Tree.add_child(Tree.add_child(child1, grandchild1))
+      |> Tree.add_child(Tree.add_child(child2, grandchild2))
+      assert Player.game_tree(board, :player_two) == tree
     end
 
   end
