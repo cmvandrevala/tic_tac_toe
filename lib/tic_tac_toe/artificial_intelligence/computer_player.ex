@@ -15,6 +15,14 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
     |> Enum.filter(fn {status, _} -> status == :empty end)
   end
 
+  def best_spot(board) do
+    cond do
+      Board.empty?(board) -> 0
+      second_turn?(board) && center_taken?(board) -> 0
+      true -> 4
+    end
+  end
+
   def utility(board, player) do
     cond do
       Rules.status(board) == player -> 10
@@ -35,15 +43,11 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
   defp build_tree(board, player, node, level, remaining_spaces) do
     [space | tail] = remaining_spaces
     marked_board = Board.mark(board, space, player)
-    utility = utility(marked_board, player)
-    value = if Integer.is_even(level), do: utility, else: -utility
+    child = child(marked_board, player, space, level)
+    append_node(board, player, node, child, level, tail)
+  end
 
-    child = if(Rules.in_progress?(marked_board)) do
-      game_tree(marked_board, opponent(player), Tree.node(nil, space), level + 1)
-    else
-      Tree.node(value, space)
-    end
-
+  defp append_node(board, player, node, child, level, tail) do
     if Kernel.length(tail) > 0 do
       build_tree(board, player, Tree.add_child(node, child), level, tail)
     else
@@ -51,12 +55,16 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
     end
   end
 
-  def best_spot(board) do
-    cond do
-      Board.empty?(board) -> 0
-      second_turn?(board) && center_taken?(board) -> 0
-      true -> 4
+  defp child(marked_board, player, space, level) do
+    if(Rules.in_progress?(marked_board)) do
+      game_tree(marked_board, opponent(player), Tree.node(nil, space), level + 1)
+    else
+      Tree.node(value(utility(marked_board, player), level), space)
     end
+  end
+
+  defp value(utility, level) do
+    if Integer.is_even(level), do: utility, else: -utility
   end
 
   defp opponent(player), do: if player == :player_one, do: :player_two, else: :player_one

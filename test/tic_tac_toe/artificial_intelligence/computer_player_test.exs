@@ -202,6 +202,40 @@ defmodule ComputerPlayerTest do
       assert Player.game_tree(board, :player_two) == tree
     end
 
+    test "returns a tree for three remaining cells" do
+      board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(6, :player_two)
+      d1 = Tree.node(0,7)
+      d2 = Tree.node(0,8)
+      d3 = Tree.node(0,5)
+      d4 = Tree.node(0,7)
+      c1 = Tree.node(-10,7)
+      c2 = Tree.add_child(Tree.node(nil,8), d1)
+      c3 = Tree.add_child(Tree.node(nil,5), d2)
+      c4 = Tree.add_child(Tree.node(nil,8), d3)
+      c5 = Tree.add_child(Tree.node(nil,5), d4)
+      c6 = Tree.node(-10,7)
+      b1 = Tree.node(nil,5)
+      |> Tree.add_child(c1)
+      |> Tree.add_child(c2)
+      b2 = Tree.node(nil,7)
+      |> Tree.add_child(c3)
+      |> Tree.add_child(c4)
+      b3 = Tree.node(nil,8)
+      |> Tree.add_child(c5)
+      |> Tree.add_child(c6)
+      tree = Tree.node
+      |> Tree.add_child(b1)
+      |> Tree.add_child(b2)
+      |> Tree.add_child(b3)
+      assert Player.game_tree(board, :player_one) == tree
+    end
+
   end
 
   describe "an unbeatable computer player" do
