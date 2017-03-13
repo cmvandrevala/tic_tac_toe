@@ -1,8 +1,8 @@
 defmodule TicTacToe.Console.ConsoleMessages do
   alias TicTacToe.Core.Board, as: Board
 
-  @player_one_mark " X "
-  @player_two_mark " O "
+  @player_one_mark [IO.ANSI.red, " X ", IO.ANSI.reset]
+  @player_two_mark [IO.ANSI.green, " O ", IO.ANSI.reset]
   @vertical_bar "|"
   @horizontal_bar "\n-----------\n"
   @newline "\n"
