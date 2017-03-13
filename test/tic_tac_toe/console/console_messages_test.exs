@@ -12,7 +12,7 @@ defmodule ConsoleMessagesTest do
 
     test "returns a board with one mark in the first cell" do
       marked_board = Board.mark(Board.empty_board, 0, :player_one)
-      output = " X | 1 | 2 \n-----------\n 3 | 4 | 5 \n-----------\n 6 | 7 | 8 \n"
+      output = "\e[31m X \e[0m| 1 | 2 \n-----------\n 3 | 4 | 5 \n-----------\n 6 | 7 | 8 \n"
       assert Messages.formatted_board(marked_board) == output
     end
 
@@ -20,7 +20,7 @@ defmodule ConsoleMessagesTest do
       marked_board = Board.empty_board
       |> Board.mark(1, :player_one)
       |> Board.mark(5, :player_two)
-      output = " 0 | X | 2 \n-----------\n 3 | 4 | O \n-----------\n 6 | 7 | 8 \n"
+      output = " 0 |\e[31m X \e[0m| 2 \n-----------\n 3 | 4 |\e[32m O \e[0m\n-----------\n 6 | 7 | 8 \n"
       assert Messages.formatted_board(marked_board) == output
     end
 
@@ -29,7 +29,7 @@ defmodule ConsoleMessagesTest do
       |> Board.mark(3, :player_one)
       |> Board.mark(7, :player_two)
       |> Board.mark(2, :player_one)
-      output = " 0 | 1 | X \n-----------\n X | 4 | 5 \n-----------\n 6 | O | 8 \n"
+      output = " 0 | 1 |\e[31m X \e[0m\n-----------\n\e[31m X \e[0m| 4 | 5 \n-----------\n 6 |\e[32m O \e[0m| 8 \n"
       assert Messages.formatted_board(marked_board) == output
     end
 
@@ -44,7 +44,7 @@ defmodule ConsoleMessagesTest do
       |> Board.mark(6, :player_one)
       |> Board.mark(7, :player_two)
       |> Board.mark(8, :player_one)
-      output = " X | O | X \n-----------\n X | O | X \n-----------\n X | O | X \n"
+      output = "\e[31m X \e[0m|\e[32m O \e[0m|\e[31m X \e[0m\n-----------\n\e[31m X \e[0m|\e[32m O \e[0m|\e[31m X \e[0m\n-----------\n\e[31m X \e[0m|\e[32m O \e[0m|\e[31m X \e[0m\n"
       assert Messages.formatted_board(marked_board) == output
     end
 
