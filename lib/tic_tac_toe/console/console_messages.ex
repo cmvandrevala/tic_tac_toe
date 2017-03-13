@@ -48,10 +48,6 @@ defmodule TicTacToe.Console.ConsoleMessages do
 
   def move_confirmation(cell), do: "You are moving in cell #{cell}."
 
-  def select_player_one, do: "\nPlease select player one."
-
-  def select_player_two, do: "\nPlease select player two."
-
   def game_begins_now, do: "\nThe game will begin now!"
 
   def menu_quit, do: "\nGoodbye! Thanks for playing!"
@@ -59,6 +55,14 @@ defmodule TicTacToe.Console.ConsoleMessages do
   def invalid_menu_input, do: "\nThat is not a valid input!"
 
   def play_again_prompt, do: "\nWould you like to play again? Yes (Y) or No (N)? "
+
+  def select_player(player) do
+    if player == :player_one do
+      "\nPlease select player one."
+    else
+      "\nPlease select player two."
+    end
+  end
 
   def game_status(status) do
     case status do

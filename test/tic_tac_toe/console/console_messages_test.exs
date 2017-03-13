@@ -119,12 +119,12 @@ defmodule ConsoleMessagesTest do
 
     test "returns a prompt for player one" do
       output = "\nPlease select player one."
-      assert Messages.select_player_one == output
+      assert Messages.select_player(:player_one) == output
     end
 
     test "returns a prompt for player two" do
       output = "\nPlease select player two."
-      assert Messages.select_player_two == output
+      assert Messages.select_player(:player_two) == output
     end
 
     test "returns a message when the game is about to begin" do

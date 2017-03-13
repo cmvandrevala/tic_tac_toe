@@ -14,11 +14,7 @@ defmodule TicTacToe.Console.MainMenu do
 
   def tic_tac_toe_setup do
     IO.puts Messages.menu_welcome
-    IO.puts Messages.select_player_one
-    player_one = select_player()
-    IO.puts Messages.select_player_two
-    player_two = select_player()
-    {player_one, player_two}
+    {select_player_type(:player_one), select_player_type(:player_two)}
   end
 
   def tic_tac_toe_play(player_one, player_two) do
@@ -34,14 +30,15 @@ defmodule TicTacToe.Console.MainMenu do
     end
   end
 
-  defp select_player do
+  defp select_player_type(current_player) do
+    IO.puts Messages.select_player(current_player)
     case IO.gets Messages.player_type_prompt do
       "1\n" -> &Game.human_player/2
       "2\n" -> &Game.first_available_spot_computer_player/2
       "3\n" -> &Game.unbeatable_computer_player/2
       _ ->
         IO.puts Messages.invalid_menu_input
-        select_player()
+        select_player_type(current_player)
     end
 
   end
