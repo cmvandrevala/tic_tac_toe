@@ -1,8 +1,8 @@
 defmodule TicTacToe do
   alias TicTacToe.Core.Game, as: Game
 
-  def main(args) do
-    Game.play(&Game.human_player/1, &Game.human_player/1)
+  def main(_) do
+    Game.play(&Game.human_player/2, &Game.human_player/2)
   end
 
 end

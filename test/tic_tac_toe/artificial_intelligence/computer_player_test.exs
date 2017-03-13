@@ -7,24 +7,24 @@ defmodule ComputerPlayerTest do
   describe "a first available spot computer player" do
 
     test "returns the first cell (index 0) if the board is empty" do
-      assert Player.first_available_spot(Board.empty_board) == 0
+      assert Player.first_available_spot(Board.empty_board, :player_one) == 0
     end
 
     test "returns the first cell (index 0) if it is available" do
       marked_board = Board.mark(Board.empty_board, 5, :p1)
-      assert Player.first_available_spot(marked_board) == 0
+      assert Player.first_available_spot(marked_board, :player_two) == 0
     end
 
     test "returns the second cell (index 1) if it is available" do
       marked_board = Board.mark(Board.empty_board, 0, :player)
-      assert Player.first_available_spot(marked_board) == 1
+      assert Player.first_available_spot(marked_board, :player_one) == 1
     end
 
     test "returns the third cell (index 2) if it is available" do
       marked_board = Board.empty_board
       |> Board.mark(0, :player1)
       |> Board.mark(1, :player2)
-      assert Player.first_available_spot(marked_board) == 2
+      assert Player.first_available_spot(marked_board, :player_two) == 2
     end
 
     test "returns the fourth cell (index 3) if it is available" do
@@ -33,7 +33,7 @@ defmodule ComputerPlayerTest do
       |> Board.mark(1, :player2)
       |> Board.mark(8, :player1)
       |> Board.mark(2, :player2)
-      assert Player.first_available_spot(marked_board) == 3
+      assert Player.first_available_spot(marked_board, :player_one) == 3
     end
 
   end
@@ -324,17 +324,96 @@ defmodule ComputerPlayerTest do
   describe "an unbeatable computer player" do
 
     test "returns the first cell if it is the first move of the game" do
-      assert Player.best_spot(Board.empty_board) == 0
+      assert Player.best_spot(Board.empty_board, :player_one) == 0
     end
 
     test "returns the center cell if it is the second move of the game and its available" do
       marked_board = Board.mark(Board.empty_board, 1, :player_one)
-      assert Player.best_spot(marked_board) == 4
+      assert Player.best_spot(marked_board, :player_two) == 4
     end
 
     test "returns the first cell if it is the second move of the game and center is not available" do
       marked_board = Board.mark(Board.empty_board, 4, :player_one)
-      assert Player.best_spot(marked_board) == 0
+      assert Player.best_spot(marked_board, :player_two) == 0
+    end
+
+    test "returns a move to tie the game if it is the only move available" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_two)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(3, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(6, :player_one)
+      |> Board.mark(7, :player_two)
+      |> Board.mark(8, :player_one)
+      assert Player.best_spot(marked_board, :player_one) == 1
+    end
+
+    test "returns a move to win the game (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.best_spot(marked_board, :player_one) == 6
+    end
+
+    test "returns a move to win the game (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_two)
+      |> Board.mark(4, :player_one)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.best_spot(marked_board, :player_two) == 0
+    end
+
+    test "selects a win over a loss (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(8, :player_two)
+      assert Player.best_spot(marked_board, :player_one) == 6
+    end
+
+    test "selects a win over a loss (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(0, :player_one)
+      |> Board.mark(1, :player_two)
+      |> Board.mark(2, :player_one)
+      |> Board.mark(3, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_one)
+      |> Board.mark(8, :player_two)
+      assert Player.best_spot(marked_board, :player_two) == 7
+    end
+
+    test "selects a win over an eventual tie (player one)" do
+      marked_board = Board.empty_board
+      |> Board.mark(2, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.best_spot(marked_board, :player_one) == 6
+    end
+
+    test "selects a win over an eventual tie (player two)" do
+      marked_board = Board.empty_board
+      |> Board.mark(2, :player_one)
+      |> Board.mark(4, :player_two)
+      |> Board.mark(5, :player_two)
+      |> Board.mark(7, :player_one)
+      |> Board.mark(8, :player_one)
+      assert Player.best_spot(marked_board, :player_two) == 3
     end
 
   end

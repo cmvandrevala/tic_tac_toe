@@ -36,10 +36,10 @@ defmodule TicTacToe.Core.Game do
     case current_player(board) do
       :player_one ->
         IO.puts Messages.player_one_turn
-        play(player_one, player_two, player_one.(board))
+        play(player_one, player_two, player_one.(board, :player_one))
       :player_two ->
         IO.puts Messages.player_two_turn
-        play(player_one, player_two, player_two.(board))
+        play(player_one, player_two, player_two.(board, :player_two))
     end
   end
 
@@ -49,13 +49,13 @@ defmodule TicTacToe.Core.Game do
     board
   end
 
-  def human_player(board),
-    do: move(board, HumanPlayer.get_move(board))
+  def human_player(board, player),
+    do: move(board, HumanPlayer.get_move(board, player))
 
-  def first_available_spot_computer_player(board),
-    do: move(board, ComputerPlayer.first_available_spot(board))
+  def first_available_spot_computer_player(board, player),
+    do: move(board, ComputerPlayer.first_available_spot(board, player))
 
-  def unbeatable_computer_player(board),
-    do: move(board, ComputerPlayer.best_spot(board))
+  def unbeatable_computer_player(board, player),
+    do: move(board, ComputerPlayer.best_spot(board, player))
 
 end
