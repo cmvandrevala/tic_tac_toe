@@ -106,4 +106,60 @@ defmodule ConsoleMessagesTest do
 
   end
 
+  describe "messages for the main menu" do
+
+    test "returns the welcome message for the main menu" do
+      line1 = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      line2 = "\n| Welcome to Elixir Tic-Tac-Toe! |"
+      line3 = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+      assert String.contains?(Messages.menu_welcome, line1)
+      assert String.contains?(Messages.menu_welcome, line2)
+      assert String.contains?(Messages.menu_welcome, line3)
+    end
+
+    test "returns a prompt for player one" do
+      output = "\nPlease select player one."
+      assert Messages.select_player_one == output
+    end
+
+    test "returns a prompt for player two" do
+      output = "\nPlease select player two."
+      assert Messages.select_player_two == output
+    end
+
+    test "returns a message when the game is about to begin" do
+      output = "\nThe game will begin now!"
+      assert Messages.game_begins_now == output
+    end
+
+    test "returns a message when the player quits the menu" do
+      output = "\nGoodbye! Thanks for playing!"
+      assert Messages.menu_quit == output
+    end
+
+    test "returns a message upon an invalid menu input" do
+      output = "\nThat is not a valid input!"
+      assert Messages.invalid_menu_input == output
+    end
+
+    test "returns a list of the types of players along with a prompt" do
+      line1 = "\nThe player types are:"
+      line2 = "(1) Human"
+      line3 = "(2) Easy Computer"
+      line4 = "(3) Hard Computer"
+      prompt = "What kind of player would you like (1, 2, or 3)? "
+      assert String.contains?(Messages.player_type_prompt, line1)
+      assert String.contains?(Messages.player_type_prompt, line2)
+      assert String.contains?(Messages.player_type_prompt, line3)
+      assert String.contains?(Messages.player_type_prompt, line4)
+      assert String.contains?(Messages.player_type_prompt, prompt)
+    end
+
+    test "returns a prompt to play again" do
+      output = "\nWould you like to play again? Yes (Y) or No (N)? "
+      assert Messages.play_again_prompt == output
+    end
+
+  end
+
 end

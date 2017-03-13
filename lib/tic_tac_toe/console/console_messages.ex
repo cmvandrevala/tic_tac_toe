@@ -48,12 +48,39 @@ defmodule TicTacToe.Console.ConsoleMessages do
 
   def move_confirmation(cell), do: "You are moving in cell #{cell}."
 
+  def select_player_one, do: "\nPlease select player one."
+
+  def select_player_two, do: "\nPlease select player two."
+
+  def game_begins_now, do: "\nThe game will begin now!"
+
+  def menu_quit, do: "\nGoodbye! Thanks for playing!"
+
+  def invalid_menu_input, do: "\nThat is not a valid input!"
+
+  def play_again_prompt, do: "\nWould you like to play again? Yes (Y) or No (N)? "
+
   def game_status(status) do
     case status do
       :player_one -> "Player one wins!"
       :player_two -> "Player two wins!"
       :tie -> "The game has ended in a tie."
     end
+  end
+
+  def menu_welcome do
+    Enum.join(["\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+               "| Welcome to Elixir Tic-Tac-Toe! |",
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"], @newline)
+  end
+
+  def player_type_prompt do
+    Enum.join(["\nThe player types are:",
+               "(1) Human",
+               "(2) Easy Computer",
+               "(3) Hard Computer",
+               "",
+               "What kind of player would you like (1, 2, or 3)? "], @newline)
   end
 
 end
