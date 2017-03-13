@@ -1,8 +1,6 @@
 defmodule TicTacToe do
-  alias TicTacToe.Core.Game, as: Game
+  alias TicTacToe.Console.MainMenu, as: Menu
 
-  def main(_) do
-    Game.play(&Game.human_player/2, &Game.unbeatable_computer_player/2)
-  end
+  def main(_), do: Menu.start()
 
 end
