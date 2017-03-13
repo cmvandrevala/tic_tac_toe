@@ -4,9 +4,25 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
   alias TicTacToe.Core.Rules, as: Rules
   require Integer
 
-  def first_available_spot(board, player) do
+  def first_available_spot(board, _) do
     [head | _] = empty_spaces(board)
     elem(head, 1)
+  end
+
+  def best_spot(board, player) do
+    cond do
+      Board.number_of_filled_cells(board) == 0 -> 0
+      second_turn?(board) && center_taken?(board) -> 0
+      second_turn?(board) -> 4
+      true -> search_for_best_spot(board, player)
+    end
+  end
+
+  def search_for_best_spot(board, player) do
+    board
+    |> find_utilities_for_remaining_cells(player)
+    |> extract_largest_utility
+    |> elem(0)
   end
 
   defp empty_spaces(board) do
@@ -15,24 +31,11 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
     |> Enum.filter(fn {status, _} -> status == :empty end)
   end
 
-  def best_spot(board, player) do
-    cond do
-      Board.empty?(board) -> 0
-      second_turn?(board) && center_taken?(board) -> 0
-      second_turn?(board) -> 4
-      true ->
-        board
-        |> utilities_for_remaining_cells(player)
-        |> best_move
-        |> elem(0)
-    end
-  end
-
-  defp utilities_for_remaining_cells(board, player) do
+  defp find_utilities_for_remaining_cells(board, player) do
     Enum.map(Keyword.values(empty_spaces(board)), fn(x) -> {x, minimax(board, x, player)} end)
   end
 
-  defp best_move(utilities_for_remaining_cells) do
+  defp extract_largest_utility(utilities_for_remaining_cells) do
     Enum.max_by(utilities_for_remaining_cells, fn(x) -> elem(x, 1) end)
   end
 
@@ -54,8 +57,8 @@ defmodule TicTacToe.ArtificialIntelligence.ComputerPlayer do
     end
   end
 
-  def game_tree(board, player), do: game_tree(board, player, Tree.node, 0)
-
+  def game_tree(board, player),
+    do: game_tree(board, player, Tree.node, 0)
   def game_tree(board, player, node, level) do
     if Board.filled?(board), do: node, else: build_tree(board, player, node, level, Board.remaining_spaces(board))
   end

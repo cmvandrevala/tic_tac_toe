@@ -18,8 +18,6 @@ defmodule TicTacToe.Core.Board do
   def remaining_spaces(board),
     do: Enum.to_list(cell_range()) -- indices_of_filled_cells(board)
 
-  def empty?(board), do: board == empty_board
-
   def filled?(board), do: number_of_filled_cells(board) == @number_of_cells
 
   defp indices_of_filled_cells(board), do: Enum.map(board, fn {k,_} -> k end)

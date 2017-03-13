@@ -168,19 +168,6 @@ defmodule BoardTest do
 
   end
 
-  describe "check if the board is empty" do
-
-    test "returns true for an empty board" do
-      assert Board.empty?(Board.empty_board)
-    end
-
-    test "returns false for a non-empty board" do
-      board = Board.mark(Board.empty_board, 3, :player_one)
-      refute Board.empty?(board)
-    end
-
-  end
-
   describe "check if the board is filled" do
 
     test "returns false for an empty board" do
