@@ -1,10 +1,10 @@
 defmodule GameTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
-  
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.Game, as: Game
-  alias TicTacToe.Rules, as: Rules
+
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Core.Game, as: Game
+  alias TicTacToe.Core.Rules, as: Rules
 
   describe "the current player" do
 
@@ -58,14 +58,14 @@ defmodule GameTest do
 
     test "two first available spot computer players play to completion" do
       capture_io fn ->
-        played_game = Game.play(&Game.first_available_spot_computer_player/1, &Game.first_available_spot_computer_player/1)
+        played_game = Game.play(&Game.first_available_spot_computer_player/2, &Game.first_available_spot_computer_player/2)
         refute Rules.in_progress?(played_game)
       end
     end
 
     test "two first available spot computer players play to a winner" do
       capture_io fn ->
-        played_game = Game.play(&Game.first_available_spot_computer_player/1, &Game.first_available_spot_computer_player/1)
+        played_game = Game.play(&Game.first_available_spot_computer_player/2, &Game.first_available_spot_computer_player/2)
         assert Rules.status(played_game) == :player_one
       end
     end

@@ -1,5 +1,5 @@
-defmodule TicTacToe.MoveValidator do
-  alias TicTacToe.Board, as: Board
+defmodule TicTacToe.Console.MoveValidator do
+  alias TicTacToe.Core.Board, as: Board
 
   @board_size Board.number_of_cells
 

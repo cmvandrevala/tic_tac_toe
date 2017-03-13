@@ -1,5 +1,5 @@
-defmodule TicTacToe.ConsoleMessages do
-  alias TicTacToe.Board, as: Board
+defmodule TicTacToe.Console.ConsoleMessages do
+  alias TicTacToe.Core.Board, as: Board
 
   @player_one_mark " X "
   @player_two_mark " O "

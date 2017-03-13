@@ -1,11 +1,11 @@
-defmodule TicTacToe.HumanPlayer do
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ConsoleMessages, as: Messages
-  alias TicTacToe.MoveValidator, as: MoveValidator
+defmodule TicTacToe.Console.HumanPlayer do
+  alias TicTacToe.Console.ConsoleMessages, as: Messages
+  alias TicTacToe.Console.MoveValidator, as: MoveValidator
+  alias TicTacToe.Core.Board, as: Board
 
-  def get_move(board), do: get_move(board, &IO.gets/1)
+  def get_move(board, player), do: get_move(board, player, &IO.gets/1)
 
-  def get_move(board, input_function) do
+  def get_move(board, player, input_function) do
     formatted_input = format_input(input_function)
     formatted_marks = format_marks(board)
     case MoveValidator.validate_cell(formatted_input, formatted_marks) do

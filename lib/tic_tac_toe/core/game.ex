@@ -1,9 +1,9 @@
-defmodule TicTacToe.Game do
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.ComputerPlayer, as: ComputerPlayer
-  alias TicTacToe.HumanPlayer, as: HumanPlayer
-  alias TicTacToe.ConsoleMessages, as: Messages
-  alias TicTacToe.Rules, as: Rules
+defmodule TicTacToe.Core.Game do
+  alias TicTacToe.ArtificialIntelligence.ComputerPlayer, as: ComputerPlayer
+  alias TicTacToe.Console.HumanPlayer, as: HumanPlayer
+  alias TicTacToe.Console.ConsoleMessages, as: Messages
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Core.Rules, as: Rules
 
   def current_player(board),
     do: if new_round?(board), do: :player_one, else: :player_two
@@ -36,10 +36,10 @@ defmodule TicTacToe.Game do
     case current_player(board) do
       :player_one ->
         IO.puts Messages.player_one_turn
-        play(player_one, player_two, player_one.(board))
+        play(player_one, player_two, player_one.(board, :player_one))
       :player_two ->
         IO.puts Messages.player_two_turn
-        play(player_one, player_two, player_two.(board))
+        play(player_one, player_two, player_two.(board, :player_two))
     end
   end
 
@@ -49,10 +49,13 @@ defmodule TicTacToe.Game do
     board
   end
 
-  def human_player(board),
-    do: move(board, HumanPlayer.get_move(board))
+  def human_player(board, player),
+    do: move(board, HumanPlayer.get_move(board, player))
 
-  def first_available_spot_computer_player(board),
-    do: move(board, ComputerPlayer.first_available_spot(board))
+  def first_available_spot_computer_player(board, player),
+    do: move(board, ComputerPlayer.first_available_spot(board, player))
+
+  def unbeatable_computer_player(board, player),
+    do: move(board, ComputerPlayer.best_spot(board, player))
 
 end

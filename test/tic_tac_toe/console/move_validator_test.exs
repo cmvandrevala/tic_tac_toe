@@ -1,8 +1,8 @@
 defmodule MoveValidatorTest do
   use ExUnit.Case
 
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.MoveValidator, as: Validator
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Console.MoveValidator, as: Validator
 
   setup _context do
     board = Board.empty_board

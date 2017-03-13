@@ -1,7 +1,7 @@
 defmodule RulesTest do
   use ExUnit.Case
-  alias TicTacToe.Board, as: Board
-  alias TicTacToe.Rules, as: Rules
+  alias TicTacToe.Core.Board, as: Board
+  alias TicTacToe.Core.Rules, as: Rules
 
   describe "if a game is in progress" do
 
