@@ -8,7 +8,8 @@ defmodule TicTacToe.Console.ConsoleMessages do
   @newline "\n"
 
   def formatted_board(board) do
-    Enum.join([Enum.at(marks(board), 0), @vertical_bar, Enum.at(marks(board), 1), @vertical_bar, Enum.at(marks(board), 2),
+    Enum.join([@newline,
+               Enum.at(marks(board), 0), @vertical_bar, Enum.at(marks(board), 1), @vertical_bar, Enum.at(marks(board), 2),
                @horizontal_bar,
                Enum.at(marks(board), 3), @vertical_bar, Enum.at(marks(board), 4), @vertical_bar, Enum.at(marks(board), 5),
                @horizontal_bar,
@@ -30,61 +31,79 @@ defmodule TicTacToe.Console.ConsoleMessages do
     end
   end
 
-  def player_one_turn, do: "It is player one's turn."
+  def choose_valid_cell,
+    do: Enum.join([@newline, "You need to enter an integer between 0 and 8."], "")
 
-  def player_two_turn, do: "It is player two's turn."
+  def game_begins_now,
+    do: Enum.join([@newline, "The game will begin now!"], "")
 
-  def game_over, do: "The game is over."
+  def game_over,
+    do: Enum.join([@newline, "The game is over."], "")
 
-  def input_too_small, do: "That cell value is too small!"
+  def input_already_taken,
+    do: Enum.join([@newline, "That cell has already been taken!"], "")
 
-  def input_too_large, do: "That cell value is too large!"
+  def input_too_large,
+    do: Enum.join([@newline, "That cell value is too large!"], "")
 
-  def input_already_taken, do: "That cell has already been taken!"
+  def input_too_small,
+    do: Enum.join([@newline, "That cell value is too small!"], "")
 
-  def choose_valid_cell, do: "You need to enter an integer between 0 and 8."
+  def invalid_menu_input,
+    do: Enum.join([@newline, "That is not a valid input!"], "")
 
-  def move_prompt, do: "Enter your move: "
+  def menu_quit,
+    do: Enum.join([@newline, "Goodbye! Thanks for playing!"], "")
 
-  def move_confirmation(cell), do: "You are moving in cell #{cell}."
+  def move_confirmation(cell),
+    do: Enum.join([@newline, "You are moving in cell #{cell}."], "")
 
-  def game_begins_now, do: "\nThe game will begin now!"
+  def move_prompt,
+    do: Enum.join([@newline, "Enter your move: "], "")
 
-  def menu_quit, do: "\nGoodbye! Thanks for playing!"
+  def play_again_prompt,
+    do: Enum.join([@newline, "Would you like to play again? Yes (Y) or No (N)? "], "")
 
-  def invalid_menu_input, do: "\nThat is not a valid input!"
+  def player_one_turn,
+    do: Enum.join([@newline, "It is player one's turn."], "")
 
-  def play_again_prompt, do: "\nWould you like to play again? Yes (Y) or No (N)? "
-
-  def select_player(player) do
-    if player == :player_one do
-      "\nPlease select player one."
-    else
-      "\nPlease select player two."
-    end
-  end
+  def player_two_turn,
+    do: Enum.join([@newline, "It is player two's turn."], "")
 
   def game_status(status) do
     case status do
-      :player_one -> "Player one wins!"
-      :player_two -> "Player two wins!"
-      :tie -> "The game has ended in a tie."
+      :player_one ->
+        Enum.join([@newline, "Player one wins!"], "")
+      :player_two ->
+        Enum.join([@newline, "Player two wins!"], "")
+      :tie ->
+        Enum.join([@newline, "The game has ended in a tie."], "")
     end
   end
 
   def menu_welcome do
-    Enum.join(["\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    Enum.join(["",
+               "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
                "| Welcome to Elixir Tic-Tac-Toe! |",
                "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"], @newline)
   end
 
   def player_type_prompt do
-    Enum.join(["\nThe player types are:",
+    Enum.join(["",
+               "The player types are:",
                "(1) Human",
                "(2) Easy Computer",
                "(3) Hard Computer",
                "",
                "What kind of player would you like (1, 2, or 3)? "], @newline)
+  end
+
+  def select_player(player) do
+    if player == :player_one do
+      Enum.join([@newline, "Please select player one."], "")
+    else
+      Enum.join([@newline, "Please select player two."], "")
+    end
   end
 
 end

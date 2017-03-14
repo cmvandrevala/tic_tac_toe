@@ -29,7 +29,7 @@ defmodule TicTacToe.Core.Game do
   end
 
   defp start_game(board) do
-    IO.puts "\n#{Messages.formatted_board(board)}"
+    IO.puts Messages.formatted_board(board)
   end
 
   defp take_turn(player_one, player_two, board) do

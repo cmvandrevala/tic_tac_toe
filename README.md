@@ -1,5 +1,7 @@
 # Tic-Tac-Toe in Elixir
 
+[![Build Status](https://travis-ci.com/cmvandrevala/tic_tac_toe.svg?token=znQU7AeYpwNK9mPe9reJ&branch=master)](https://travis-ci.com/cmvandrevala/tic_tac_toe)
+
 This is a game of tic-tac-toe implemented in Elixir. It features move validation and computer players.
 
 ## Installing Elixir and Mix
