@@ -2,6 +2,23 @@
 
 This is a game of tic-tac-toe implemented in Elixir. It features move validation and computer players.
 
+## Installing Elixir and Mix
+
+The [Elixir website](http://elixir-lang.org/install.html) has some instructions on how to get set up with Elixir and mix. If you have Homebrew installed on your computer, the command is simply:
+
+```
+brew update
+brew install elixir
+```
+
+Those with MacPorts can run:
+
+```
+sudo port install elixir
+```
+
+Follow the instructions on the aforementioned website to ensure that the ```/path/to/elixir/bin``` directory is contained in the ```PATH``` variable.
+
 ## Development
 
 This project uses mix as its build tool. If you want to play around with the app in a REPL, mix will automatically set it up and load all of the modules associated with the project:
