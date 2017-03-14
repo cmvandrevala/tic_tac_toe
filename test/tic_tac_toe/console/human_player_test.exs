@@ -21,38 +21,24 @@ defmodule HumanPlayerTest do
       end
     end
 
-    test "filters out single quotes" do
+    test "sanitizes a message correctly (variation one)" do
       capture_io fn ->
-        output = HumanPlayer.get_move(Board.empty_board, :player_one, fn(_) -> "'8\n" end)
+        output = HumanPlayer.get_move(Board.empty_board, :player_one, fn(_) -> "~`8!@#$%^&*()-_+=\n" end)
         assert output == 8
       end
     end
 
-    test "filters out double quotes" do
+    test "sanitizes a message correctly (variation two)" do
       capture_io fn ->
-        output = HumanPlayer.get_move(Board.empty_board, :player_two, fn(_) -> "\"8\"\n" end)
-        assert output == 8
+        output = HumanPlayer.get_move(Board.empty_board, :player_two, fn(_) -> "3{[|]}\\:;\"\'" end)
+        assert output == 3
       end
     end
 
-    test "filters out semicolons" do
+    test "sanitizes a message correctly (variation three)" do
       capture_io fn ->
-        output = HumanPlayer.get_move(Board.empty_board, :player_one, fn(_) -> "2;\n" end)
-        assert output == 2
-      end
-    end
-
-    test "filters out colons" do
-      capture_io fn ->
-        output = HumanPlayer.get_move(Board.empty_board, :player_two, fn(_) -> ":7:\n" end)
-        assert output == 7
-      end
-    end
-
-    test "filters out commas" do
-      capture_io fn ->
-        output = HumanPlayer.get_move(Board.empty_board, :player_one, fn(_) -> ",,6\n" end)
-        assert output == 6
+        output = HumanPlayer.get_move(Board.empty_board, :player_two, fn(_) -> "1,<.>/?" end)
+        assert output == 1
       end
     end
 

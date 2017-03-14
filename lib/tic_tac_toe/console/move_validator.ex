@@ -9,15 +9,17 @@ defmodule TicTacToe.Console.MoveValidator do
 
   def only_newline?(raw_input), do: Regex.match?(~r/^[\s]$/, raw_input)
 
-  def validate_cell(move, _) when is_nil(move),
-    do: :not_an_integer
-  def validate_cell(move, _) when move < 0,
-    do: :too_small
-  def validate_cell(move, _) when move > @board_size-1,
-    do: :too_large
-  def validate_cell(move, marks) when elem(marks, move) !== :empty,
-    do: :cell_taken
-  def validate_cell(_, _),
-    do: :valid
+  def is_empty_string?(raw_input), do: raw_input == ""
+
+  def validate_cell(move, marks) do
+    cond do
+      is_nil(move) -> :not_an_integer
+      move == "" -> :not_an_integer
+      move < 0 -> :too_small
+      move > @board_size - 1 -> :too_large
+      elem(marks, move)!== :empty -> :cell_taken
+      true -> :valid
+    end
+  end
 
 end

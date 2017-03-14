@@ -32,6 +32,12 @@ defmodule MoveValidatorTest do
       refute Validator.only_newline?("wxyz\n")
     end
 
+    test "detects an empty string" do
+      assert Validator.is_empty_string?("")
+      refute Validator.is_empty_string?("\n")
+      refute Validator.is_empty_string?("abc123")
+    end
+
   end
 
   describe "validating a cell after the raw input filter" do
@@ -50,6 +56,10 @@ defmodule MoveValidatorTest do
 
     test "returns :not_an_integer when the input is nil", context do
       assert Validator.validate_cell(nil, context[:board]) == :not_an_integer
+    end
+
+    test "returns :not_an_integer when the input is an empty string", context do
+      assert Validator.validate_cell("", context[:board]) == :not_an_integer
     end
 
     test "returns :integer_too_small for an input that is too small", context do
